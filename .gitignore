@@ -23,5 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
-.venv
+.env              
+.env.local         
+.env.[mode]        
+.env.[mode].local   

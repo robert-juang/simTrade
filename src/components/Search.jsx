@@ -1,23 +1,34 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { mockSearchResults } from "../constants/mock";
 import SearchResults from "./SearchResult"
+import { searchSymbols } from '../api/stock-api';
 
 const Search = () => {
   const [input, setInput] = useState("") 
-    const [bestMatches, setBestMatches] = useState(mockSearchResults.result) //different from video 
+  const [bestMatches, setBestMatches] = useState([]) //different from video 
   
   const clear = () => {
     setInput(""); 
     setBestMatches([]); 
   }
 
-  const updateBestMatches = () => {
-    setBestMatches(mockSearchResults.result) //different from video 
+  const updateBestMatches = async () => {
+    try{
+      if (input) {
+        const searchResults = await searchSymbols(input); 
+        const result = searchResults.result; 
+        setBestMatches(result); 
+      }
+    }
+    catch(error){
+      setBestMatches([]);
+      console.log("Error updateBestMatches",error) 
+    }
   }
   
   return (
     <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200">
-        <input type="text" value={input} className="w-full px-4 py-2 focus:outline-none rounded-md" placeholder="Search stock..." onChange={(event) => {setInput(event.target.value);}} onKeyPress={(event) => {
+        <input type="text" value={input} className="w-full px-4 py-2 focus:outline-none rounded-md" placeholder="Search stock..." onChange={(event) => {setInput(event.target.value);}} onClick={(event) => {
             if (event.key === "enter") {
                 updateBestMatches(); 
             }

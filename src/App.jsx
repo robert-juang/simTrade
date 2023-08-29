@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import Dashboard from "./components/Dashboard"
 import Heading from "./components/Heading" 
+import StockContext from "./context/StockContext"
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [stockSymbol, setStockSymbol] = useState("AAPL"); 
 
   return (
     <> 
       <Heading/>
-      <Dashboard/>
+      <StockContext.Provider value={{stockSymbol, setStockSymbol}}>
+        <Dashboard/>
+      </StockContext.Provider>
     </>
   )
 }

@@ -14,7 +14,7 @@ export default {
         1: "1px",
       },
       fontFamily: {
-        quicksand: ["Quicksand", "sans-serif"],
+        Quicksand: ["Quicksand", "sans-serif"],
       },
       gridTemplateRows: {
         7: "repeat(7, minmax(0, 1fr))", 
