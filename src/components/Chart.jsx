@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import Card from "./Card"
 import { fetchHistoricalData } from "../api/stock-api";
+import ThemeContext from '../context/ThemeContext';
 import StockContext from "../context/StockContext"; 
 import chartConfig from "../constants/config"
 
@@ -28,7 +29,7 @@ function Chart() {
     const [data, setData] = useState([]); 
     const [filter, setFilter] = useState("1W"); 
 
-    // const { darkMode } = useContext(ThemeContext); 
+    const { darkMode } = useContext(ThemeContext); 
     const { stockSymbol } = useContext(StockContext); 
     
     useEffect(() => {
@@ -67,8 +68,8 @@ function Chart() {
                 <AreaChart data={data}>
                     <defs>
                         <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="rgb(199 210 254)" stopOpacity={0.8} />
-                            <stop offset="95%" stopColor="rgb(199 210 254)" stopOpacity={0} />
+                            <stop offset="5%" stopColor={darkMode ? "#312e81" : "rgb(199 210 254)"} stopOpacity={0.8} />
+                            <stop offset="95%" stopColor={darkMode ? "#312e81" : "rgb(199 210 254)"} stopOpacity={0} />
                         </linearGradient>
                         <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
@@ -76,7 +77,10 @@ function Chart() {
                         </linearGradient>
                     </defs>
                     <Area type="monotone" dataKey="value" stroke="#312e81" fillOpacity={1} strokeWidth={0.5} fill="url(#chartColor)"/>
-                    <Tooltip/>
+                    <Tooltip 
+                        contentStyle={darkMode ? {backgroundColor: "#111827"} : null}
+                        itemStyle={darkMode? {color: "#818cf8"} : null} 
+                    />
                     <XAxis dateKey={"date"}/>
                     <YAxis domain={["dataMin", "dataMax"]}/>
                 </AreaChart>

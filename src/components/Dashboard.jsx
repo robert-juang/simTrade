@@ -3,15 +3,24 @@ import Header from "./Header"
 import Details from "./Details"
 import Overview from "./Overview"
 import Chart from "./Chart"
+import Trade from "./Trade"
+import Card from "./Card"
+import Portfolio from "./Portfolio"
+
 import StockContext from '../context/StockContext'
+import ThemeContext from "../context/ThemeContext"
 import { fetchStockDetails, fetchQuote } from "../api/stock-api"
 
 function Dashboard() {
+
+    const {darkMode} = useContext(ThemeContext) 
 
     const { stockSymbol } = useContext(StockContext); 
 
     const [stockDetails, setStockDetails] = useState({})
     const [quote, setQuote] = useState({}) 
+
+    const [stockBought, setStockBought] = useState("")
 
     useEffect(() => {
         const updateStockDetails = async () => {
@@ -41,20 +50,39 @@ function Dashboard() {
     }, [stockSymbol])
 
     return (
-      <div className="h-screen grid grid-cols-1 md:grid-cols-2 xl: grid-cols-3 grid-rows-8 md: grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand bg-neutral-100">
-        <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex justify-start item-center">
-            <Header name={stockDetails.name}/>
+        <div className="">
+            <div className={`h-screen grid grid-cols-1 md:grid-cols-2 xl: grid-cols-3 grid-rows-8 md: grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand
+                ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`}>
+                <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex justify-start item-center">
+                    <Header name={stockDetails.name}/>
+                </div>
+                <div className="md:col-span-2 row-span-4">
+                    <Chart />
+                </div>
+                <div>
+                    <Overview symbol={stockSymbol} price={quote.pc} change={quote.d} changePercent={quote.dp} currency={stockDetails.currency}/>
+                </div>
+                <div className="row-span-2 xl:row-span-3">
+                    <Details details={stockDetails} />
+                </div>
+            </div>
+            
+            <div className={`h-3/6 p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`}>
+                <div className="w-full font-serif font-extrabold text-2xl">
+                    Trade
+                </div>
+                    <Trade stockBought={stockBought} setStockBought={setStockBought} />
+
+            </div>
+            <div className={`h-3/6 p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`}>
+                <div className="w-full font-serif font-extrabold text-2xl">
+                    Portfolio
+                </div>
+                <Portfolio />
+            </div>
         </div>
-        <div className="md:col-span-2 row-span-4">
-            <Chart />
-        </div>
-        <div>
-            <Overview symbol={stockSymbol} price={quote.pc} change={quote.d} changePercent={quote.dp} currency={stockDetails.currency}/>
-        </div>
-        <div className="row-span-2 xl:row-span-3">
-            <Details details={stockDetails} />
-        </div>
-      </div>
+    
+
   )
 }
 
