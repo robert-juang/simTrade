@@ -1,14 +1,20 @@
 import { ThemeContext } from '@emotion/react'
-import React, {useContext} from 'react'
+import React, {useEffect, useContext} from 'react'
+import SimulationContext from '../context/SimulationContext'
 
 function Portfolio() {
 
   const {darkMode} = useContext(ThemeContext)
+  const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
+  
+  useEffect(() => {
+    console.log(stockList) 
+  }, [])
 
   return (
     // <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200" id="portfolio">
 
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg" id="portfolio">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class={`w-full text-sm text-left text-gray-500 ${darkMode ? "dark:text-gray-400" : ""}`}>
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -33,6 +39,32 @@ function Portfolio() {
             </tr>
           </thead>
           <tbody>
+            {
+              stockList.getTrades().map((tradeObject, index) => {
+                return (
+                  <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {tradeObject.symbol}
+                    </th>
+                    <td class="px-6 py-4">
+                      {tradeObject.current_price}
+                    </td>
+                    <td class="px-6 py-4">
+                      {tradeObject.purchase_price}
+                    </td>
+                    <td class="px-6 py-4">
+                      {tradeObject.totalCost}
+                    </td>
+                    <td class="px-6 py-4">
+                      {tradeObject.findCurrentValue()}
+                    </td>
+                    <td class="px-6 py-4">
+                      {tradeObject.trade_action === "Buy" ? tradeObject.quantity : -1 * tradeObject.quantity}
+                    </td>
+                  </tr>
+                )
+              })
+            }
             <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 Apple MacBook Pro 17"
@@ -122,3 +154,5 @@ function Portfolio() {
 }
 
 export default Portfolio
+
+
