@@ -3,18 +3,19 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ThemeContext } from '@emotion/react';
 
 import SimulationContext from "../context/SimulationContext"
+import StockContext from '../context/StockContext';
 
 function Trade({ stockBought, setStockBought }) {
-
+    
     const [showModal, setShowModal] = useState(false);
-
-
+    
     const [amount, setAmount] = useState(0);
     const [action, setAction] = useState("Buy")
     const [submitted, setSubmitted] = useState(false)
-
+    
     const [Today, setToday] = useState("12/21/2022")
-
+    
+    const {stockSymbol} = useContext(StockContext)
     const { darkMode } = useContext(ThemeContext);
     const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
 
@@ -22,6 +23,11 @@ function Trade({ stockBought, setStockBought }) {
         //TODO fill in information when submitted 
         console.log(amount, action, date, submitted)
         setSubmitted(true)
+    }
+
+    const handleStartDate = () => {
+        setShowModal(false)
+        setCurrentDate(startDate) 
     }
 
     function forwardSimDay() {
@@ -87,7 +93,7 @@ function Trade({ stockBought, setStockBought }) {
                                     className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button"
                                     onClick={() => setShowModal(true)}
-                                > Set Start Date
+                                > Start Sim
                                 </button>
                                 {showModal ? (
                                     <>
@@ -131,7 +137,7 @@ function Trade({ stockBought, setStockBought }) {
                                                         <button
                                                             className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                             type="button"
-                                                            onClick={() => setShowModal(false)}
+                                                            onClick={() => handleStartDate()}
                                                         >
                                                             Save Changes
                                                         </button>

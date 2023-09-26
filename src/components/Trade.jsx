@@ -3,6 +3,7 @@ import Select from 'react-select'
 
 import { ThemeContext } from '@emotion/react';
 import SimulationContext from '../context/SimulationContext';
+import StockContext from "../context/StockContext"; 
 
 function Trade({stockBought, setStockBought}) {
 
@@ -14,13 +15,28 @@ function Trade({stockBought, setStockBought}) {
   const [amount, setAmount] = useState(0); 
   const [action, setAction] = useState("Buy") 
 
+  const { stockSymbol } = useContext(StockContext)
   const {darkMode} = useContext(ThemeContext); 
   const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
     //TODO fill in information when submitted 
+    console.log(stockBought)
     console.log(amount, action, startDate, currentDate) 
+    const newObj = new TradeObject(search, 100, stockPrice, amount, action ? "Buy" : "Sell");
+
+    //adjust portfolio 
+    console.log(portfolio)
+    if (action) {
+      setPortfolio(portfolio - newObj.totalCost)
+    }
+    else {
+      setPortfolio(portfolio + newObj.totalCost)
+    }
+
+    stockList.addTrades(newObj);
+    stockList.combine();
   }
 
   const handleAmount = (event) => {
@@ -44,11 +60,11 @@ function Trade({stockBought, setStockBought}) {
                 <div class="flex items-center space-x-4">
                   <div class="flex-1 min-w-0">
                     <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      StockName: 
+                      Stock Ticker: 
                     </p>
                   </div>
                   <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                    {stockBought ? stockBought : "N/A"}
+                    {stockSymbol}
                   </div>
                 </div>
               </li>

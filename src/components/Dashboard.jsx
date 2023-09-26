@@ -77,7 +77,7 @@ function Dashboard() {
 
             </div>
 
-            <div className={`h-2/6 p-10 font-quicksand ${darkMode ? "bg-gray-900" : "bg-neutral-100"}`} id="trade">
+            <div className={`h-2/6 p-10 font-quicksand ${darkMode ? "bg-gray-900" : "bg-neutral-100"}`} id="action">
                 <div className={`w-full font-serif font-extrabold text-2xl ${darkMode ? "text-gray-300" : null}`}>
                     Action
                 </div>
