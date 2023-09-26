@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 
+import { StocksObject } from '../logic/stock';
+
 import { ThemeContext } from '@emotion/react';
 
 import SimulationContext from "../context/SimulationContext"
@@ -64,8 +66,9 @@ function Trade({ stockBought, setStockBought }) {
         console.log(currentDate)
     }
 
-    function resetSimDay() {
+    function resetSim() {
         setCurrentDate(startDate)
+        setStockList(new StocksObject());
     }
 
     useEffect(() => {
@@ -106,7 +109,7 @@ function Trade({ stockBought, setStockBought }) {
                                                     {/*header*/}
                                                     <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                                         <h3 className="text-3xl text-black font-semibold">
-                                                            Start Date
+                                                            Settings
                                                         </h3>
                                                         <button
                                                             className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -119,11 +122,15 @@ function Trade({ stockBought, setStockBought }) {
                                                     </div>
                                                     {/*body*/}
                                                     <div className="relative p-6 flex-auto">
+                                                        <p>Start Date: {startDate}</p>
                                                         <input
                                                             type="date"
                                                             onChange={(e) => setStartDate(e.target.value)}
                                                         />
-                                                        <p>Current Start Date: {startDate}</p>
+                                                    </div>
+                                                    <div className="relative p-6 flex-auto">
+                                                        <p>Portfolio Value: {portfolio}</p>
+                                                        <input className="border-5 bg-gray-50 text-black p-1" type="number" min="0" placeholder={amount} onChange={(e) => setPortfolio(e.target.value)}></input>
                                                     </div>
                                                     {/*footer*/}
                                                     <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -154,11 +161,11 @@ function Trade({ stockBought, setStockBought }) {
                                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded" onClick={forwardSimMonth}>
                                     +1 Month
                                 </button>
-                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={resetSimDay}>
-                                    Reset Trade
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={resetSim}>
+                                    Reset
                                 </button>
                                 <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded" >
-                                    Save Trade
+                                    Save Result
                                 </button>
                                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded">
                                     Generate Chart

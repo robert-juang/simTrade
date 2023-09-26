@@ -72,9 +72,8 @@ function Dashboard() {
                     Trade
                 </div>
                 <div className="w-full">
-                    <Trade stockBought={stockBought} setStockBought={setStockBought} />
+                    <Trade stockBought={stockBought} setStockBought={setStockBought} stockDetail={stockDetails} price={quote.pc}/>
                 </div>
-
             </div>
 
             <div className={`h-2/6 p-10 font-quicksand ${darkMode ? "bg-gray-900" : "bg-neutral-100"}`} id="action">
@@ -89,7 +88,7 @@ function Dashboard() {
 
             <div className={`h-3/6 p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="portfolio">
                 <div className="w-full font-serif font-extrabold text-2xl">
-                    Portfolio
+                    Portfolio: ${portfolio} 
                 </div>
                 <Portfolio />
             </div>

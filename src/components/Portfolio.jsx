@@ -40,9 +40,10 @@ function Portfolio() {
           </thead>
           <tbody>
             {
+              
               stockList.getTrades().map((tradeObject, index) => {
                 return (
-                  <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                  <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700" id={index}>
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {tradeObject.symbol}
                     </th>
@@ -53,19 +54,19 @@ function Portfolio() {
                       {tradeObject.purchase_price}
                     </td>
                     <td class="px-6 py-4">
-                      {tradeObject.totalCost}
-                    </td>
-                    <td class="px-6 py-4">
-                      {tradeObject.findCurrentValue()}
-                    </td>
-                    <td class="px-6 py-4">
                       {tradeObject.trade_action === "Buy" ? tradeObject.quantity : -1 * tradeObject.quantity}
+                    </td>
+                    <td class="px-6 py-4">
+                      {tradeObject.PnL}
+                    </td>
+                    <td class="px-6 py-4">
+                      {tradeObject.trade_action}
                     </td>
                   </tr>
                 )
               })
             }
-            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+            {/* <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 Apple MacBook Pro 17"
               </th>
@@ -144,7 +145,7 @@ function Portfolio() {
               <td class="px-6 py-4">
                 $1999
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

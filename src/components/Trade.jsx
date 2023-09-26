@@ -1,33 +1,36 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Select from 'react-select'
+import { TradeObject, StocksObject } from "../logic/stock.ts"
 
 import { ThemeContext } from '@emotion/react';
 import SimulationContext from '../context/SimulationContext';
 import StockContext from "../context/StockContext"; 
 
-function Trade({stockBought, setStockBought}) {
+function Trade({stockBought, setStockBought, stockDetail, price}) {
 
   const options = [
     { value: true, label: 'Buy' },
     { value: false, label: 'Sell' },
   ]
 
-  const [amount, setAmount] = useState(0); 
-  const [action, setAction] = useState("Buy") 
-
   const { stockSymbol } = useContext(StockContext)
   const {darkMode} = useContext(ThemeContext); 
   const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
 
+  const [amount, setAmount] = useState(0);
+  const [action, setAction] = useState("Buy") 
+
+  const [totalCost, setTotalCost] = useState(""); 
+
   const handleSubmit = (e) => {
     e.preventDefault(); 
     //TODO fill in information when submitted 
-    console.log(stockBought)
+
     console.log(amount, action, startDate, currentDate) 
-    const newObj = new TradeObject(search, 100, stockPrice, amount, action ? "Buy" : "Sell");
+
+    const newObj = new TradeObject(stockSymbol, 100, price, amount, action ? "Buy" : "Sell");
 
     //adjust portfolio 
-    console.log(portfolio)
     if (action) {
       setPortfolio(portfolio - newObj.totalCost)
     }
@@ -46,6 +49,16 @@ function Trade({stockBought, setStockBought}) {
   const handleAction = (e) => {
     setAction(e.value) 
   }
+
+  useEffect(() => {
+    console.log(stockDetail)
+    console.log(price) 
+  }, [])
+
+  useEffect(() => {
+    parseFloat("10.547892").toFixed(2)
+    setTotalCost(parseFloat(`${amount * price}`).toFixed(2))
+  },[amount])
 
   return (
     <>
@@ -104,6 +117,30 @@ function Trade({stockBought, setStockBought}) {
                   </div>
                   <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                     {currentDate}
+                  </div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                      Current Price
+                    </p>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                    {price}
+                  </div>
+                </div>
+              </li>
+              <li class="py-3 sm:py-4">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                      Total Cost
+                    </p>
+                  </div>
+                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                    {totalCost}
                   </div>
                 </div>
               </li>
