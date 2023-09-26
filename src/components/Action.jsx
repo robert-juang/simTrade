@@ -68,6 +68,7 @@ function Trade({ stockBought, setStockBought }) {
 
     function resetSim() {
         setCurrentDate(startDate)
+        setPortfolio(100000)
         setStockList(new StocksObject());
     }
 
@@ -93,7 +94,7 @@ function Trade({ stockBought, setStockBought }) {
                         <li class="pt-3 pb-0 sm:pt-4">
                             <div class="flex items-center justify-between space-x-4">
                                 <button
-                                    className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    className="bg-pink-500 text-white hover:bg-pink-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button"
                                     onClick={() => setShowModal(true)}
                                 > Start Sim
@@ -164,7 +165,7 @@ function Trade({ stockBought, setStockBought }) {
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={resetSim}>
                                     Reset
                                 </button>
-                                <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded" >
+                                <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded">
                                     Save Result
                                 </button>
                                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded">
