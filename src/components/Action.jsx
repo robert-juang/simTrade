@@ -2,8 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import { StocksObject, SimulationObject } from '../logic/stock';
 
-import { ThemeContext } from '@emotion/react';
-
+import ThemeContext from '../context/ThemeContext'
 import SimulationContext from "../context/SimulationContext"
 import StockContext from '../context/StockContext';
 
@@ -92,7 +91,7 @@ function Trade({ stockBought, setStockBought }) {
 
     return (
         <>
-            <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class={`w-full p-4 border border-gray-200 rounded-lg shadow sm:p-8 ${darkMode ? "bg-gray-800 border-gray-700 text-white" : "bg-white text-gray-900"}`}>
                 <div class="flow-root">
                     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
                         <li class="pt-3 pb-0 sm:pt-4">
