@@ -1,7 +1,6 @@
 import React, {useContext} from 'react'
 import ThemeContext from "../context/ThemeContext"
 import Brightness3Icon from '@mui/icons-material/Brightness3';
-import Brightness5Icon from '@mui/icons-material/Brightness5';
 
 const ThemeIcon = () => {
 

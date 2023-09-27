@@ -7,7 +7,7 @@ import { ThemeContext } from '@emotion/react';
 import SimulationContext from "../context/SimulationContext"
 import StockContext from '../context/StockContext';
 
-import {getEntries, addEntry} from "../api/database-api"
+import {addEntry} from "../api/database-api"
 
 import { makeid } from '../helpers/date-helper';
 
