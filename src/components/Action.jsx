@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { StocksObject } from '../logic/stock';
+import { StocksObject, SimulationObject } from '../logic/stock';
 
 import { ThemeContext } from '@emotion/react';
 
 import SimulationContext from "../context/SimulationContext"
 import StockContext from '../context/StockContext';
+
+import {getEntries, addEntry} from "../api/database-api"
 
 function Trade({ stockBought, setStockBought }) {
     
@@ -70,6 +72,10 @@ function Trade({ stockBought, setStockBought }) {
         setCurrentDate(startDate)
         setPortfolio(100000)
         setStockList(new StocksObject());
+    }
+
+    function saveSim(){
+
     }
 
     useEffect(() => {
@@ -165,7 +171,7 @@ function Trade({ stockBought, setStockBought }) {
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" onClick={resetSim}>
                                     Reset
                                 </button>
-                                <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded">
+                                <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded" onClick={saveSim}>
                                     Save Result
                                 </button>
                                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded">

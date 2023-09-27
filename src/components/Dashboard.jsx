@@ -6,16 +6,19 @@ import Chart from "./Chart"
 import Trade from "./Trade"
 import Portfolio from "./Portfolio"
 import Action from "./Action" 
+import Leaderboard from './Leaderboard'
 
 import StockContext from '../context/StockContext'
 import ThemeContext from "../context/ThemeContext"
 import SimulationContext from "../context/SimulationContext"
+import PageContext from "../context/PageContext"
 import { fetchStockDetails, fetchQuote } from "../api/stock-api"
 
 function Dashboard() {
 
     const {darkMode} = useContext(ThemeContext) 
-    const { stockSymbol } = useContext(StockContext); 
+    const {stockSymbol} = useContext(StockContext); 
+    const {page, setPage} = useContext(PageContext); 
     const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
 
     const [stockDetails, setStockDetails] = useState({})
@@ -50,6 +53,7 @@ function Dashboard() {
     }, [stockSymbol])
 
     return (
+        (page ?
         <div className="">
             <div className={`h-screen grid grid-cols-1 md:grid-cols-2 xl: grid-cols-3 grid-rows-8 md: grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand
                 ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`}>
@@ -93,7 +97,8 @@ function Dashboard() {
                 <Portfolio />
             </div>
         </div>
-    
+        : <Leaderboard/>
+        )
 
   )
 }

@@ -98,7 +98,56 @@ class StocksObject {
     }
 }
 
+
+class SimulationObject {
+    private _userID: string;
+    private _portfolioValue: number;
+    private _numberOfTrades: number;
+    private _totalGain: number;
+
+    constructor(userID: string, portfolioValue: number, numberOfTrades: number, totalGain: number) {
+        this._userID = userID;
+        this._portfolioValue = portfolioValue;
+        this._numberOfTrades = numberOfTrades;
+        this._totalGain = totalGain;
+    }
+
+    get userID(): string {
+        return this._userID;
+    }
+
+    set userID(value: string) {
+        this._userID = value;
+    }
+
+    get portfolioValue(): number {
+        return this._portfolioValue;
+    }
+
+    set portfolioValue(value: number) {
+        this._portfolioValue = value;
+    }
+
+    get numberOfTrades(): number {
+        return this._numberOfTrades;
+    }
+
+    set numberOfTrades(value: number) {
+        this._numberOfTrades = value;
+    }
+
+    get totalGain(): number {
+        return this._totalGain;
+    }
+
+    set totalGain(value: number) {
+        this._totalGain = value;
+    }
+}
+
+
 export {
     TradeObject,
-    StocksObject
+    StocksObject, 
+    SimulationObject, 
 }
