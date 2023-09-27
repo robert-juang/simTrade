@@ -1,17 +1,16 @@
 const basePath = "http://localhost:8080";
 
 //call the stock api from the backend 
-
 export const getEntries = async () => {
-    //TODO
     const response = await fetch(`${basePath}/simDB/simData`)
 
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
-    console.log(response.body)
-    return await response.json()
+    const result = await response.json() 
+    result.sort((a, b) => parseInt(b.portfolioValue, 10) - parseInt(a.portfolioValue, 10));
+    return result
 };
 
 export const addEntry = async (Simulation) => {
@@ -20,6 +19,7 @@ export const addEntry = async (Simulation) => {
     // private Long portfolioValue; 
     // private Integer numberOfTrades; 
     // private Long totalGain; 
+    console.log(Simulation) 
 
     const requestOptions = {
         method: 'POST',

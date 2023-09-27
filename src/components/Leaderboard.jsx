@@ -7,8 +7,10 @@ function Leaderboard() {
   const [newScores, setNewScores] = useState([])
 
   useEffect(() => {
-    const result = getEntries(); 
-    console.log(result) 
+    getEntries()
+    .then((list) => setScores(list))
+    
+    console.log(scores) 
   }, [])
 
   return (
@@ -63,19 +65,19 @@ function Leaderboard() {
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                 <div class="pl-3">
-                  <div class="text-base font-semibold">{sim}</div>
+                  <div class="text-base font-semibold">{sim.userID}</div>
                 </div>
               </th>
               <td class="px-6 py-4">
-                {sim}
+                {sim.portfolioValue}
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center">
-                  {sim}
+                  {sim.numberOfTrades}
                 </div>
               </td>
               <td class="px-6 py-4">
-                {sim}
+                {sim.totalGain}
               </td>
             </tr>
           ))}

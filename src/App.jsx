@@ -18,7 +18,7 @@ function App() {
   const [startDate, setStartDate] = useState("2022-01-01"); 
   const [currentDate, setCurrentDate] = useState("2022-01-01"); 
 
-  const [stockList, setStockList] = useState(new StocksObject()); 
+  const [stockList, setStockList] = useState(new StocksObject(portfolio)); 
 
   const [page, setPage] = useState(0) //0 is main 1 is leaderboard
 

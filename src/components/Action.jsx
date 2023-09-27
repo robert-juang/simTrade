@@ -25,11 +25,6 @@ function Trade({ stockBought, setStockBought }) {
     const { darkMode } = useContext(ThemeContext);
     const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
 
-    const handleSubmit = () => {
-        //TODO fill in information when submitted 
-        console.log(amount, action, date, submitted)
-        setSubmitted(true)
-    }
 
     const handleStartDate = () => {
         setShowModal(false)
@@ -73,12 +68,12 @@ function Trade({ stockBought, setStockBought }) {
     function resetSim() {
         setCurrentDate(startDate)
         setPortfolio(100000)
-        setStockList(new StocksObject());
+        setStockList(new StocksObject(100000));
     }
 
     function saveSim(){
         const USERID = makeid(64)
-        addEntry(new SimulationObject(USERID, portfolio, stockList.length, portfolio - 100000))
+        addEntry(new SimulationObject(USERID, portfolio, stockList.trades.length, stockList.portfolio - portfolio))
     }
 
     useEffect(() => {
