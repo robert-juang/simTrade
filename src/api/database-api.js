@@ -1,4 +1,4 @@
-const basePath = "https://localhost:8080";
+const basePath = "http://localhost:8080";
 
 //call the stock api from the backend 
 
@@ -10,7 +10,7 @@ export const getEntries = async () => {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
-    console.log(response.json)
+    console.log(response.body)
     return await response.json()
 };
 
