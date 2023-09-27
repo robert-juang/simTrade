@@ -29,7 +29,7 @@ function Leaderboard() {
         </div>
       </div>
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class={`text-xs text-gray-700 uppercase bg-gray-50 ${darkMode ? "dark:bg-gray-700 dark:text-gray-400" : ""}`}>
+        <thead class={`text-xs uppercase bg-gray-50 ${darkMode ? "bg-gray-700 text-gray-400" : ""}`}>
           <tr>
             <th scope="col" class="px-6 py-3">
               User ID
@@ -47,7 +47,7 @@ function Leaderboard() {
         </thead>
         <tbody>
           {scores.map((sim) => (
-            <tr class={`bg-white border-b ${darkMode ? "bg-gray-800 text-gray-900 border-gray-700 hover:bg-gray-50 hover:bg-gray-600 text-white" : "bg-gray-100 border-gray-600 hover:bg-gray-300"}`}>
+            <tr class={`border-b ${darkMode ? "bg-gray-800 text-gray-900 border-gray-700 hover:bg-gray-600 text-white" : "border-gray-600 hover:bg-gray-300"}`}>
               <th scope="row" class="flex items-center px-6 py-4 whitespace-nowrap">
                 <div class="pl-3">
                   <div class="text-base font-semibold">{sim.userID}</div>

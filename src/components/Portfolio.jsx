@@ -14,8 +14,8 @@ function Portfolio() {
   return (
     // <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200" id="portfolio">
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class={`w-full text-sm text-left ${darkMode ? "bg-gray-700 border-gray-700 text-gray-400" : "bg-white text-gray-900"}`}>
-        <thead class={`text-xs text-gray-700 uppercase bg-gray-50 ${darkMode ? " bg-gray-700 border-gray-700 text-gray-400" : "bg-white text-gray-900"}`}>
+        <table class={`w-full text-sm text-left ${darkMode ? "bg-gray-700 border-gray-700 text-white" : "bg-white text-gray-900"}`}>
+        <thead class={`text-xs text-gray-700 uppercase bg-gray-50 ${darkMode ? "bg-gray-700 border-gray-700 text-white" : "bg-white text-gray-900"}`}>
             <tr>
               <th scope="col" class="px-6 py-3">
                 Symbol
