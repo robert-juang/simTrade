@@ -9,6 +9,8 @@ import StockContext from '../context/StockContext';
 
 import {getEntries, addEntry} from "../api/database-api"
 
+import { makeid } from '../helpers/date-helper';
+
 function Trade({ stockBought, setStockBought }) {
     
     const [showModal, setShowModal] = useState(false);
@@ -75,7 +77,8 @@ function Trade({ stockBought, setStockBought }) {
     }
 
     function saveSim(){
-
+        const USERID = makeid(64)
+        addEntry(new SimulationObject(USERID, portfolio, stockList.length, portfolio - 100000))
     }
 
     useEffect(() => {

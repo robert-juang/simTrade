@@ -97,7 +97,15 @@ function Dashboard() {
                 <Portfolio />
             </div>
         </div>
-        : <Leaderboard/>
+        : 
+        <div className={`h-screen p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="trade">
+                <div className="w-full font-serif font-extrabold text-2xl">
+                    LeaderBoard
+                </div>
+                <div className="w-full">
+                    <Leaderboard />
+                </div>
+            </div>
         )
 
   )

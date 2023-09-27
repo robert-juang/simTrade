@@ -4,7 +4,7 @@ const basePath = "https://localhost:8080";
 
 export const getEntries = async () => {
     //TODO
-    const response = await fetch(`${basePath}/simulation`)
+    const response = await fetch(`${basePath}/simDB/simData`)
 
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
@@ -28,11 +28,11 @@ export const addEntry = async (Simulation) => {
     };
 
     //TODO 
-    const response = await fetch(`${basePath}/sim/${Simulation}`, requestOptions)
+    const response = await fetch(`${basePath}/simDB/simData`, requestOptions)
 
     if (!response.ok){
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
-    
+
 }
