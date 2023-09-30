@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import Select from 'react-select'
-import { TradeObject, StocksObject } from "../logic/stock.ts"
+import { TradeObject, StocksObject } from "../logic/stock"
 
 import ThemeContext from '../context/ThemeContext'
 import SimulationContext from '../context/SimulationContext';
@@ -38,6 +38,7 @@ function Trade({stockBought, setStockBought, stockDetail, price}) {
       setPortfolio(portfolio + newObj.totalCost)
     }
 
+    //add trade to the stockList 
     stockList.addTrades(newObj);
     stockList.combine();
   }

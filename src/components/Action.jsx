@@ -111,8 +111,8 @@ function Trade({ stockBought, setStockBought }) {
                                                 {/*content*/}
                                                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                                     {/*header*/}
-                                                    <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                                        <h3 className="text-3xl text-black font-semibold">
+                                                    <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t text-black ">
+                                                        <h3 className="text-3xl font-semibold">
                                                             Settings
                                                         </h3>
                                                         <button
@@ -125,14 +125,14 @@ function Trade({ stockBought, setStockBought }) {
                                                         </button>
                                                     </div>
                                                     {/*body*/}
-                                                    <div className="relative p-6 flex-auto">
+                                                    <div className="relative p-6 flex-auto text-black">
                                                         <p>Start Date: {startDate}</p>
                                                         <input
                                                             type="date"
                                                             onChange={(e) => setStartDate(e.target.value)}
                                                         />
                                                     </div>
-                                                    <div className="relative p-6 flex-auto">
+                                                    <div className="relative p-6 flex-auto text-black">
                                                         <p>Portfolio Value: {portfolio}</p>
                                                         <input className="border-5 bg-gray-50 text-black p-1" type="number" min="0" placeholder={amount} onChange={(e) => setPortfolio(e.target.value)}></input>
                                                     </div>

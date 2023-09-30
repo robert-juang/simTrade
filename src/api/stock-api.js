@@ -34,6 +34,7 @@ export const fetchQuote = async (quote) => {
 }
 
 export const fetchHistoricalData = async(query, resolution, from, to) => {
+    
     const response = await fetch(`http://localhost:8080/stock/${query}/resolution/${resolution}/startTime/${from}/endTime/${to}`)
 
     if (!response.ok) {

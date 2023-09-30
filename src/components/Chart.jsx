@@ -14,7 +14,10 @@ import Card from "./Card"
 import { fetchHistoricalData } from "../api/stock-api";
 import ThemeContext from '../context/ThemeContext';
 import StockContext from "../context/StockContext"; 
+import SimulationContext from '../context/SimulationContext';
 import chartConfig from "../constants/config"
+
+import testJSON from "../assets/test.json" 
 
 const formatData = (data) => {
     return data.c.map((item, index) => {
@@ -31,36 +34,45 @@ function Chart() {
 
     const { darkMode } = useContext(ThemeContext); 
     const { stockSymbol } = useContext(StockContext); 
-    
+    const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
+
     useEffect(() => {
-        const getDateRange = () => {
-            const {days, weeks, months, years} = chartConfig[filter];
+        // const getDateRange = () => {
+        //     const {days, weeks, months, years} = chartConfig[filter];
 
-            const endDate = new Date(); 
-            const startDate = createDate(endDate, -days, -weeks, -months, -years); 
+        //     const endDateCur = new Date(); 
+        //     const startDate2 = createDate(startDate, -days, -weeks, -months, -years); 
+            
+        //     console.log(startDate) 
 
-            const startTimestampUnix = convertDateToUnixTimestamp(startDate)
-            const endTimestampUnix = convertDateToUnixTimestamp(endDate); 
+        //     const startTimestampUnix = convertDateToUnixTimestamp(startDate2)
+        //     const endTimestampUnix = convertDateToUnixTimestamp(endDateCur); 
 
-            return {startTimestampUnix, endTimestampUnix}; 
-        }
-        const updateChartData = async  () => {
-            try{
-                const { startTimestampUnix, endTimestampUnix } = getDateRange();
-                const resolution = chartConfig[filter].resolution;
-                const result = await fetchHistoricalData(
-                    stockSymbol, resolution, startTimestampUnix, endTimestampUnix
-                ); 
-                setData(formatData(result));
-            } catch (error){
-                setData([]); 
-                console.log(error) 
-            }
-        }
-        updateChartData(); 
+        //     return {startTimestampUnix, endTimestampUnix}; 
+        // }
+        // const updateChartData = async  () => {
+        //     try{
+        //         const { startTimestampUnix, endTimestampUnix } = getDateRange();
+        //         const resolution = "D";
 
+        //         const result = await fetchHistoricalData(
+        //             stockSymbol, resolution, startTimestampUnix, endTimestampUnix
+        //         ); 
+        //         console.log(result) 
+        //         setData(formatData(result));
+        //     } catch (error){
+        //         setData([]); 
+        //         console.log(error) 
+        //     }
+        // }
+        // updateChartData(); 
+        console.log(startDate) 
+        setData(formatData(testJSON)) 
     }, [stockSymbol,filter]) 
 
+    useEffect(() => {
+        
+    }, [currentDate])
 
     return (
         <Card>

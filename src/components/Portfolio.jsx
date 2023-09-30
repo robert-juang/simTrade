@@ -9,7 +9,7 @@ function Portfolio() {
   
   useEffect(() => {
     console.log(stockList) 
-  }, [])
+  }, [stockList])
 
   return (
     // <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200" id="portfolio">

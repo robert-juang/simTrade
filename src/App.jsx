@@ -6,7 +6,7 @@ import ThemeContext from "./context/ThemeContext"
 import SimulationContext from "./context/SimulationContext"
 import PageContext from "./context/PageContext" 
 
-import {TradeObject, StocksObject} from "./logic/stock.ts" 
+import {TradeObject, StocksObject} from "./logic/stock" 
 
 function App() {
   
