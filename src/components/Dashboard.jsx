@@ -14,6 +14,8 @@ import SimulationContext from "../context/SimulationContext"
 import PageContext from "../context/PageContext"
 import { fetchStockDetails, fetchQuote } from "../api/stock-api"
 
+import { truncate } from '../helpers/helper-function'
+
 function Dashboard() {
 
     const {darkMode} = useContext(ThemeContext) 
@@ -53,7 +55,7 @@ function Dashboard() {
     }, [stockSymbol])
 
     useEffect(() => {
-        setPortfolio(stockList.calculatePortfolio(globalCache, currentDate))
+        setPortfolio(stockList.calculatePortfolio(globalCache, currentDate, portfolio))
     }, [currentDate])
 
     return (
@@ -96,7 +98,7 @@ function Dashboard() {
 
             <div className={`h-3/6 p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="portfolio">
                 <div className="w-full font-serif font-extrabold text-2xl">
-                    Portfolio: ${portfolio} 
+                    Portfolio: ${truncate(portfolio)} 
                 </div>
                 <Portfolio />
             </div>

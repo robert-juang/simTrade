@@ -1,9 +1,9 @@
-const basePath = "https://finnhub.io/api/v1"; 
+const basePath = "http://localhost:8080"; 
 
 //call the stock api from the backend 
 
 export const searchSymbols = async (query) => {
-    const response = await fetch(`http://localhost:8080/symbol/${query}`)
+    const response = await fetch(`${basePath}/symbol/${query}`)
 
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`; 
@@ -14,7 +14,7 @@ export const searchSymbols = async (query) => {
 };
 
 export const fetchStockDetails = async (stockSymbol) => {
-    const response = await fetch(`http://localhost:8080/stock/${stockSymbol}`)
+    const response = await fetch(`${basePath}/stock/${stockSymbol}`)
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`; 
         throw new Error(message); 
@@ -24,7 +24,7 @@ export const fetchStockDetails = async (stockSymbol) => {
 }
 
 export const fetchQuote = async (quote) => {
-    const response = await fetch(`http://localhost:8080/quote/${quote}`)
+    const response = await fetch(`${basePath}/quote/${quote}`)
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
@@ -35,7 +35,7 @@ export const fetchQuote = async (quote) => {
 
 export const fetchHistoricalData = async(query, resolution, from, to) => {
     
-    const response = await fetch(`http://localhost:8080/stock/${query}/resolution/${resolution}/startTime/${from}/endTime/${to}`)
+    const response = await fetch(`${basePath}/stock/${query}/resolution/${resolution}/startTime/${from}/endTime/${to}`)
 
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;

@@ -25,9 +25,7 @@ export const addEntry = async (Simulation) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "userID": Simulation._userID, "portfolioValue": Simulation._portfolioValue, "numberOfTrades": Simulation._numberOfTrades, "totalGain": Simulation._totalGain })
-    };
-
-    //TODO 
+    }; 
     const response = await fetch(`${basePath}/simDB/simData`, requestOptions)
 
     if (!response.ok){

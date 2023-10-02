@@ -62,6 +62,8 @@ function Trade({ stockBought, setStockBought }) {
             setCurrentDate(incrementMonth(currentDate))
         }
         console.log(currentDate)
+        console.log(stockList)
+
     }
 
     function resetSim() {
@@ -72,7 +74,7 @@ function Trade({ stockBought, setStockBought }) {
 
     function saveSim(){
         const USERID = makeid(64)
-        const newObj = new SimulationObject(USERID, parseFloat(portfolio), stockList.trades.length, portfolio - stockList.portfolio)
+        const newObj = new SimulationObject(USERID, parseFloat(portfolio), stockList.getNumTrades(), portfolio - stockList.portfolio)
         addEntry(newObj)
     }
 
@@ -91,6 +93,7 @@ function Trade({ stockBought, setStockBought }) {
         // This arrangement can be altered based on how we want the date's format to appear.
         const currentDate = `${year}-${month}-${day}`;
         setToday(currentDate)
+
     }, [])
 
 

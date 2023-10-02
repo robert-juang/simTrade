@@ -41,12 +41,17 @@ class TradeObject {
     }
 
     findPnLPercent(newPrice){
+        if (newPrice === "Not Valid Trading Day") {
+            return 0
+        }
+
         if (this.trade_action === "Buy") {
             return truncate((newPrice - this.purchase_price)/this.purchase_price * 100)
         }
-        else {
+        else if (this.trade_action === "Sell"){
             return truncate((this.purchase_price - newPrice)/newPrice * 100)
         }
+
     }
 
     getCurrentPrice(globalCache, curDate){
@@ -72,12 +77,14 @@ class TradeObject {
         const pos = findStockPosition(this.symbol) 
         console.assert(pos !== -1, "Error: Symbol not found in Cache") //Error if -1
         return getValue(pos); 
+        
     }
 }
 
 class StocksObject {
     constructor(portfolio) {
         this.trades = [];
+        this.numTrades = 0; 
         this.portfolio = portfolio;
     }
 
@@ -88,19 +95,61 @@ class StocksObject {
     setTrades(trade) { this.trades = trade; }
     addTrades(trade) { this.trades.push(trade); }
 
+    getNumTrades() { return this.numTrades} 
+    addNumTrade() {this.numTrades += 1}
+
+    //automatically merge any entries like repeated buys or buys and sells on the same stock (Credit to GPT)
     combine() {
-        // let combined = {};
+            // Using a map to store indices of symbols in the trades array
+            let symbolIndices = {};
 
-        // this.trades.forEach((trade) => {
-        //     let key = trade.symbol + '-' + trade.trade_action;
-        //     if (combined[key]) {
-        //         combined[key].quantity = (parseInt(combined[key].quantity, 10) + parseInt(trade.quantity, 10)).toString();
-        //     } else {
-        //         combined[key] = new TradeObject(trade.symbol, 100, trade.purchase_price, trade.quantity, trade.trade_action);
-        //     }
-        // });
+            // Iterate over trades
+            for (let i = 0; i < this.trades.length; i++) {
+                let trade = this.trades[i];
+                if (symbolIndices[trade.symbol] !== undefined) {
+                    // Found a duplicate
+                    let duplicateIndex = symbolIndices[trade.symbol];
+                    let duplicateTrade = this.trades[duplicateIndex];
 
-        // this.trades = Object.values(combined).filter(trade => trade.quantity !== 0);
+                    if (trade.trade_action === duplicateTrade.trade_action) {
+                        if (trade.trade_action === 'Buy') {
+                            // Handle Buy-Buy case
+                            let totalQuantity = parseFloat(trade.quantity) + parseFloat(duplicateTrade.quantity);
+                            trade.purchase_price = (parseFloat(trade.purchase_price) * parseFloat(trade.quantity) + parseFloat(duplicateTrade.purchase_price) * parseFloat(duplicateTrade.quantity)) / totalQuantity;
+                            trade.quantity = totalQuantity.toString();
+                            trade.totalCost = trade.purchase_price * trade.quantity;
+                        }
+                        // Handle Sell-Sell case, if needed, similar to Buy-Buy
+
+                        // Removing the duplicate entry
+                        this.trades.splice(duplicateIndex, 1);
+                        i--; // Adjusting the loop counter after splicing
+                    } else {
+                        // Handle Buy-Sell or Sell-Buy case
+                        let buyTrade = trade.trade_action === 'Buy' ? trade : duplicateTrade;
+                        let sellTrade = trade.trade_action === 'Sell' ? trade : duplicateTrade;
+
+                        let netQuantity = parseFloat(buyTrade.quantity) - parseFloat(sellTrade.quantity);
+
+                        if (netQuantity > 0) {
+                            buyTrade.quantity = netQuantity.toString();
+                            this.trades.splice(this.trades.indexOf(sellTrade), 1);
+                            i--;
+                        } else if (netQuantity < 0) {
+                            sellTrade.quantity = (-netQuantity).toString();
+                            this.trades.splice(this.trades.indexOf(buyTrade), 1);
+                            i--;
+                        } else {
+                            // Quantity is equal, remove both
+                            this.trades.splice(this.trades.indexOf(buyTrade), 1);
+                            this.trades.splice(this.trades.indexOf(sellTrade), 1);
+                            i -= 2; // Adjusting the loop counter after double splicing
+                        }
+                    }
+                } else {
+                    symbolIndices[trade.symbol] = i;
+                }
+            }
     }
 
     getBuy() {
@@ -111,8 +160,8 @@ class StocksObject {
         return this.trades.filter(trade => trade.trade_action === 'sell');
     }
 
-    calculatePortfolio(globalCache, currentDate){
-        let res = this.portfolio
+    calculatePortfolio(globalCache, currentDate, portfolio){
+        let res = portfolio
         this.trades.forEach(ele => {
             const change = parseFloat(ele.findPnL(ele.getCurrentPrice(globalCache, currentDate)))
             res += change

@@ -29,7 +29,6 @@ function Trade({stockBought, setStockBought, stockDetail, price}) {
 
     const newObj = new TradeObject(stockSymbol, currentPrice, amount, currentDate, action ? "Buy" : "Sell");
 
-    //adjust portfolio 
     if (action) {
       setPortfolio(portfolio - newObj.totalCost)
     }
@@ -39,12 +38,9 @@ function Trade({stockBought, setStockBought, stockDetail, price}) {
 
     //add trade to the stockList 
     stockList.addTrades(newObj);
+    stockList.addNumTrade(); 
     stockList.combine();
   }
-
-  const handleAmount = (event) => {
-    setAmount(event.target.value);
-  };
 
   const handleAction = (e) => {
     setAction(e.value) 
