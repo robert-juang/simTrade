@@ -17,8 +17,8 @@ import { fetchStockDetails, fetchQuote } from "../api/stock-api"
 function Dashboard() {
 
     const {darkMode} = useContext(ThemeContext) 
-    const {stockSymbol} = useContext(StockContext); 
     const {page, setPage} = useContext(PageContext); 
+    const { stockSymbol, setStockSymbol, currentPrice, setCurrentPrice, localCache, setLocalCache, globalCache, setGlobalCache } = useContext(StockContext); 
     const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
 
     const [stockDetails, setStockDetails] = useState({})
@@ -52,6 +52,10 @@ function Dashboard() {
 
     }, [stockSymbol])
 
+    useEffect(() => {
+        setPortfolio(stockList.calculatePortfolio(globalCache, currentDate))
+    }, [currentDate])
+
     return (
         (page ?
         <div className="">
@@ -70,15 +74,6 @@ function Dashboard() {
                     <Details details={stockDetails} />
                 </div>
             </div>
-            
-            <div className={`h-3/6 p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="trade">
-                <div className="w-full font-serif font-extrabold text-2xl">
-                    Trade
-                </div>
-                <div className={`w-full`}>
-                    <Trade stockBought={stockBought} setStockBought={setStockBought} stockDetail={stockDetails} price={quote.pc}/>
-                </div>
-            </div>
 
             <div className={`h-2/6 p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="action">
                 <div className={`w-full font-serif font-extrabold text-2xl ${darkMode ? "text-gray-300" : null}`}>
@@ -88,6 +83,15 @@ function Dashboard() {
                     <Action stockBought={stockBought} setStockBought={setStockBought} />
                 </div>
 
+            </div>
+            
+            <div className={`h-3/6 p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="trade">
+                <div className="w-full font-serif font-extrabold text-2xl">
+                    Trade
+                </div>
+                <div className={`w-full`}>
+                    <Trade stockBought={stockBought} setStockBought={setStockBought} stockDetail={stockDetails} price={quote.pc}/>
+                </div>
             </div>
 
             <div className={`h-3/6 p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="portfolio">

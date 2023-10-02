@@ -19,6 +19,8 @@ import chartConfig from "../constants/config"
 
 import testJSON from "../assets/test.json" 
 
+import { areDatesEqual } from '../helpers/date-helper';
+
 const formatData = (data) => {
     return data.c.map((item, index) => {
         return {
@@ -28,50 +30,93 @@ const formatData = (data) => {
     })
 }
 
+function findStockPosition(stockSymbol) {
+    for (let i = 0; i < globalCache.length; i++) {
+        if (globalCache[i].stock === stockSymbol) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 function Chart() {
     const [data, setData] = useState([]); 
-    const [filter, setFilter] = useState("1W"); 
+    const [filter, setFilter] = useState("1D"); 
 
     const { darkMode } = useContext(ThemeContext); 
-    const { stockSymbol } = useContext(StockContext); 
+    const { stockSymbol, setStockSymbol, currentPrice, setCurrentPrice, localCache, setLocalCache, globalCache, setGlobalCache} = useContext(StockContext); 
     const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
 
     useEffect(() => {
-        // const getDateRange = () => {
-        //     const {days, weeks, months, years} = chartConfig[filter];
-
-        //     const endDateCur = new Date(); 
-        //     const startDate2 = createDate(startDate, -days, -weeks, -months, -years); 
-            
-        //     console.log(startDate) 
-
-        //     const startTimestampUnix = convertDateToUnixTimestamp(startDate2)
-        //     const endTimestampUnix = convertDateToUnixTimestamp(endDateCur); 
-
-        //     return {startTimestampUnix, endTimestampUnix}; 
-        // }
-        // const updateChartData = async  () => {
-        //     try{
-        //         const { startTimestampUnix, endTimestampUnix } = getDateRange();
-        //         const resolution = "D";
-
-        //         const result = await fetchHistoricalData(
-        //             stockSymbol, resolution, startTimestampUnix, endTimestampUnix
-        //         ); 
-        //         console.log(result) 
-        //         setData(formatData(result));
-        //     } catch (error){
-        //         setData([]); 
-        //         console.log(error) 
-        //     }
-        // }
-        // updateChartData(); 
-        console.log(startDate) 
-        setData(formatData(testJSON)) 
-    }, [stockSymbol,filter]) 
+        //This will run to fetch the data from api once when the component mounts. Do not fetch if the data is already in globalCache
+    }, [])
 
     useEffect(() => {
-        
+        const getDateRange = () => {
+            const {days, weeks, months, years} = chartConfig[filter];
+
+            const endDateCur = new Date(); 
+            const startDate2 = createDate(startDate, -days, -weeks, -months, -years); 
+            
+            console.log(startDate) 
+
+            const startTimestampUnix = convertDateToUnixTimestamp(startDate2)
+            const endTimestampUnix = convertDateToUnixTimestamp(endDateCur); 
+
+            return {startTimestampUnix, endTimestampUnix}; 
+        }
+        const updateChartData = async  () => {
+            try{
+                const isInCache = globalCache.some(entry => entry.stock === stockSymbol);
+                if (!isInCache){ //not in cache, call api and fetch
+                    const { startTimestampUnix, endTimestampUnix } = getDateRange();
+                    const resolution = "D";
+    
+                    const result = await fetchHistoricalData(
+                        stockSymbol, resolution, startTimestampUnix, endTimestampUnix
+                    ); 
+                    console.log(result) 
+                    const newData = formatData(result)
+                    const updatedStocks = [...globalCache, { "stock": stockSymbol, "data": newData }]
+                    setData(newData);
+                    setLocalCache(newData)
+                    setGlobalCache(updatedStocks)
+                }
+                else{ //already in cache 
+                    const pos = findStockPosition(stockSymbol)
+                    setData(globalCache[pos]["data"])
+                    setLocalCache(globalCache[pos]["data"]) 
+                }
+            } catch (error){
+                setData([]); 
+                console.log(error) 
+            }
+        }
+        updateChartData(); 
+
+
+    }, [stockSymbol, filter]) 
+
+    //recompute chart range when current date changes
+    useEffect(() => {
+        const beg = new Date(startDate).getTime(); 
+        const end = new Date(currentDate).getTime(); 
+        const newData = localCache.filter((value) => {
+            const date1 = new Date(value.date).getTime();
+            if (date1 > beg && date1 < end) {
+                return true
+            }
+            return false; 
+        })
+        setData(newData) 
+
+        //Change price of display
+        localCache.forEach(element => {
+            if (areDatesEqual(element.date ,currentDate)){
+                setCurrentPrice(element.value)
+            }
+        });
+
     }, [currentDate])
 
     return (
@@ -93,7 +138,10 @@ function Chart() {
                         contentStyle={darkMode ? {backgroundColor: "#111827"} : null}
                         itemStyle={darkMode? {color: "#818cf8"} : null} 
                     />
-                    <XAxis dateKey={"date"}/>
+                    <XAxis dataKey="date" tickFormatter={(tickItem) => {
+                        const date = new Date(tickItem);
+                        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+                    }} />
                     <YAxis domain={["dataMin", "dataMax"]}/>
                 </AreaChart>
             </ResponsiveContainer>

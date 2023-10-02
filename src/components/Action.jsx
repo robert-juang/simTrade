@@ -18,7 +18,7 @@ function Trade({ stockBought, setStockBought }) {
     const [action, setAction] = useState("Buy")
     const [submitted, setSubmitted] = useState(false)
     
-    const [Today, setToday] = useState("12/21/2022")
+    const [Today, setToday] = useState("12/01/2022")
     
     const {stockSymbol} = useContext(StockContext)
     const { darkMode } = useContext(ThemeContext);
@@ -72,22 +72,27 @@ function Trade({ stockBought, setStockBought }) {
 
     function saveSim(){
         const USERID = makeid(64)
-        addEntry(new SimulationObject(USERID, portfolio, stockList.trades.length, stockList.portfolio - portfolio))
+        const newObj = new SimulationObject(USERID, parseFloat(portfolio), stockList.trades.length, portfolio - stockList.portfolio)
+        addEntry(newObj)
     }
 
     useEffect(() => {
         const date = new Date();
-        const day = date.getDate();
+        let day = date.getDate();
         let month = date.getMonth() + 1;
         const year = date.getFullYear();
         //calculate correct month to string append
         if (!(Math.floor(month / 10))) {
             month = "0" + month;
         }
+        if (!(Math.floor(day / 10))) {
+            day = "0" + day;
+        }
         // This arrangement can be altered based on how we want the date's format to appear.
         const currentDate = `${year}-${month}-${day}`;
         setToday(currentDate)
     }, [])
+
 
     return (
         <>

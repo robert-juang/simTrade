@@ -13,8 +13,7 @@ function Trade({stockBought, setStockBought, stockDetail, price}) {
     { value: false, label: 'Sell' },
   ]
 
-  const { stockSymbol } = useContext(StockContext)
-  const {darkMode} = useContext(ThemeContext); 
+  const { stockSymbol, setStockSymbol, currentPrice, setCurrentPrice, localCache, setLocalCache, globalCache, setGlobalCache } = useContext(StockContext); const {darkMode} = useContext(ThemeContext); 
   const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
 
   const [amount, setAmount] = useState(0);
@@ -28,7 +27,7 @@ function Trade({stockBought, setStockBought, stockDetail, price}) {
 
     console.log(amount, action, startDate, currentDate) 
 
-    const newObj = new TradeObject(stockSymbol, 100, price, amount, action ? "Buy" : "Sell");
+    const newObj = new TradeObject(stockSymbol, currentPrice, amount, currentDate, action ? "Buy" : "Sell");
 
     //adjust portfolio 
     if (action) {
@@ -52,13 +51,8 @@ function Trade({stockBought, setStockBought, stockDetail, price}) {
   }
 
   useEffect(() => {
-    console.log(stockDetail)
-    console.log(darkMode) 
-  }, [])
-
-  useEffect(() => {
     parseFloat("10.547892").toFixed(2)
-    setTotalCost(parseFloat(`${amount * price}`).toFixed(2))
+    setTotalCost(parseFloat(`${amount * currentPrice}`).toFixed(2))
   },[amount])
 
   return (
@@ -129,7 +123,7 @@ function Trade({stockBought, setStockBought, stockDetail, price}) {
                     </p>
                   </div>
                   <div class="inline-flex items-center text-base font-semibold">
-                    {price}
+                    {currentPrice}
                   </div>
                 </div>
               </li>
@@ -141,7 +135,7 @@ function Trade({stockBought, setStockBought, stockDetail, price}) {
                     </p>
                   </div>
                   <div class="inline-flex items-center text-base font-semibold">
-                    {totalCost}
+                    {isNaN(totalCost) ? "" : totalCost}
                   </div>
                 </div>
               </li>

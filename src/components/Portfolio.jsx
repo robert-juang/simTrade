@@ -1,11 +1,14 @@
-import ThemeContext from '../context/ThemeContext'
 import React, {useEffect, useContext} from 'react'
+
+import ThemeContext from '../context/ThemeContext'
 import SimulationContext from '../context/SimulationContext'
+import StockContext from '../context/StockContext'
 
 function Portfolio() {
 
   const {darkMode} = useContext(ThemeContext)
   const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
+  const { stockSymbol, setStockSymbol, currentPrice, setCurrentPrice, localCache, setLocalCache, globalCache, setGlobalCache } = useContext(StockContext); 
   
   useEffect(() => {
     console.log(stockList) 
@@ -25,6 +28,9 @@ function Portfolio() {
               </th>
               <th scope="col" class="px-6 py-3">
                 Purchase Price
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Date Bought
               </th>
               <th scope="col" class="px-6 py-3">
                 Quantity
@@ -47,16 +53,19 @@ function Portfolio() {
                       {tradeObject.symbol}
                     </th>
                     <td class="px-6 py-4">
-                      {tradeObject.current_price}
+                      {tradeObject.getCurrentPrice(globalCache, currentDate)}
                     </td>
                     <td class="px-6 py-4">
-                      {tradeObject.purchase_price}
+                      {tradeObject.getPurchasePrice()}
+                    </td>
+                    <td class="px-6 py-4">
+                      {tradeObject.getDateBought()}
                     </td>
                     <td class="px-6 py-4">
                       {tradeObject.trade_action === "Buy" ? tradeObject.quantity : -1 * tradeObject.quantity}
                     </td>
                     <td class="px-6 py-4">
-                      {tradeObject.PnL}
+                      {tradeObject.findPnL(tradeObject.getCurrentPrice(globalCache, currentDate)).toLocaleString()} <span class={`${tradeObject.findPnLPercent(tradeObject.getCurrentPrice(globalCache, currentDate)) >= 0 ? "text-green-400" : "text-red-400"}`}> ({tradeObject.findPnLPercent(tradeObject.getCurrentPrice(globalCache, currentDate))}%)</span>
                     </td>
                     <td class="px-6 py-4">
                       {tradeObject.trade_action}

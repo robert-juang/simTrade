@@ -24,7 +24,7 @@ export const addEntry = async (Simulation) => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "userID": Simulation.userID, "portfolioValue": Simulation.portfolioValue, "numberOfTrades": Simulation.numberOfTrades, "totalGain": Simulation.totalGain })
+        body: JSON.stringify({ "userID": Simulation._userID, "portfolioValue": Simulation._portfolioValue, "numberOfTrades": Simulation._numberOfTrades, "totalGain": Simulation._totalGain })
     };
 
     //TODO 

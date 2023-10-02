@@ -1,21 +1,21 @@
+import { areDatesEqual } from "../helpers/date-helper";
+import {truncate} from "../helpers/helper-function" 
+
 class TradeObject {
-    constructor(symbol, current_price, purchase_price, quantity, trade_action) {
+
+    constructor(symbol, purchase_price, quantity, dateBought, trade_action) {
         this.symbol = symbol;
-        this.current_price = current_price;
         this.purchase_price = purchase_price;
         this.quantity = quantity;
         this.trade_action = trade_action;
-        this.PnL = quantity * (current_price - purchase_price);
         this.totalCost = purchase_price * quantity;
+        this.dateBought = dateBought
     }
 
     getSymbol() { return this.symbol; }
     setSymbol(symbol) { this.symbol = symbol; }
 
-    getCurrentPrice() { return this.current_price; }
-    setCurrentPrice(current_price) { this.current_price = current_price; }
-
-    getPurchasePrice() { return this.purchase_price; }
+    getPurchasePrice() { return truncate(this.purchase_price); }
     setPurchasePrice(purchase_price) { this.purchase_price = purchase_price; }
 
     getQuantity() { return this.quantity; }
@@ -24,15 +24,54 @@ class TradeObject {
     getTradeAction() { return this.trade_action; }
     setTradeAction(trade_action) { this.trade_action = trade_action; }
 
-    getPnL() { return this.PnL; }
-    setPnL(pnl) { this.PnL = pnl; }
+    getDateBought(){return this.dateBought} 
+    setDateBought(date){return this.dateBought = date} 
 
-    findPnLPercent() {
-        return (((this.current_price - this.purchase_price) / this.purchase_price) * 100.0);
+    findPnL(newPrice) {
+        if (!isNaN(newPrice)){
+            if (this.trade_action === "Buy"){
+                return truncate((newPrice - this.purchase_price) * this.quantity)
+            }
+            else{ 
+                return truncate((this.purchase_price - newPrice) * this.quantity)
+            }
+        }
+        //TODO 
+        return 0
     }
 
-    findCurrentValue() {
-        return this.quantity * this.current_price;
+    findPnLPercent(newPrice){
+        if (this.trade_action === "Buy") {
+            return truncate((newPrice - this.purchase_price)/this.purchase_price * 100)
+        }
+        else {
+            return truncate((this.purchase_price - newPrice)/newPrice * 100)
+        }
+    }
+
+    getCurrentPrice(globalCache, curDate){
+        function findStockPosition(stockSymbol) {
+            for (let i = 0; i < globalCache.length; i++) {
+                if (globalCache[i].stock === stockSymbol) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        function getValue(pos){
+            let res = "Not Valid Trading Day"
+            globalCache[pos]["data"].forEach((ele) => {
+                if (areDatesEqual(ele.date, curDate)) {
+                    res = ele.value
+                }
+            })
+            return res; 
+        }
+
+        const pos = findStockPosition(this.symbol) 
+        console.assert(pos !== -1, "Error: Symbol not found in Cache") //Error if -1
+        return getValue(pos); 
     }
 }
 
@@ -42,23 +81,26 @@ class StocksObject {
         this.portfolio = portfolio;
     }
 
+    getPortfolio() { return truncate(this.portfolio)}
+    setPortfolio(val){return this.portfolio = truncate(val)}
+
     getTrades() { return this.trades; }
     setTrades(trade) { this.trades = trade; }
     addTrades(trade) { this.trades.push(trade); }
 
     combine() {
-        let combined = {};
+        // let combined = {};
 
-        this.trades.forEach((trade) => {
-            let key = trade.symbol + '-' + trade.trade_action;
-            if (combined[key]) {
-                combined[key].quantity = (parseInt(combined[key].quantity, 10) + parseInt(trade.quantity, 10)).toString();
-            } else {
-                combined[key] = new TradeObject(trade.symbol, 100, trade.purchase_price, trade.quantity, trade.trade_action);
-            }
-        });
+        // this.trades.forEach((trade) => {
+        //     let key = trade.symbol + '-' + trade.trade_action;
+        //     if (combined[key]) {
+        //         combined[key].quantity = (parseInt(combined[key].quantity, 10) + parseInt(trade.quantity, 10)).toString();
+        //     } else {
+        //         combined[key] = new TradeObject(trade.symbol, 100, trade.purchase_price, trade.quantity, trade.trade_action);
+        //     }
+        // });
 
-        this.trades = Object.values(combined).filter(trade => trade.quantity !== 0);
+        // this.trades = Object.values(combined).filter(trade => trade.quantity !== 0);
     }
 
     getBuy() {
@@ -67,6 +109,15 @@ class StocksObject {
 
     getSell() {
         return this.trades.filter(trade => trade.trade_action === 'sell');
+    }
+
+    calculatePortfolio(globalCache, currentDate){
+        let res = this.portfolio
+        this.trades.forEach(ele => {
+            const change = parseFloat(ele.findPnL(ele.getCurrentPrice(globalCache, currentDate)))
+            res += change
+        })
+        return res
     }
 }
 
@@ -81,13 +132,13 @@ class SimulationObject {
     get userID() { return this._userID; }
     set userID(value) { this._userID = value; }
 
-    get portfolioValue() { return this._portfolioValue; }
+    get portfolioValue() { return truncate(this._portfolioValue); }
     set portfolioValue(value) { this._portfolioValue = value; }
 
     get numberOfTrades() { return this._numberOfTrades; }
     set numberOfTrades(value) { this._numberOfTrades = value; }
 
-    get totalGain() { return this._totalGain; }
+    get totalGain() { return truncate(this._totalGain); }
     set totalGain(value) { this._totalGain = value; }
 }
 
