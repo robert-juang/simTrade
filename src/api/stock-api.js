@@ -1,4 +1,4 @@
-const basePath = "http://localhost:8080"; 
+const basePath = "http://localhost:8080/api/stockprice"; 
 
 //call the stock api from the backend 
 

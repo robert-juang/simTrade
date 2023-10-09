@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie';
 import Header from "./Header"
 import Details from "./Details"
 import Overview from "./Overview"
@@ -7,6 +8,7 @@ import Trade from "./Trade"
 import Portfolio from "./Portfolio"
 import Action from "./Action" 
 import Leaderboard from './Leaderboard'
+import Profile from "./Profile" 
 
 import StockContext from '../context/StockContext'
 import ThemeContext from "../context/ThemeContext"
@@ -15,6 +17,7 @@ import PageContext from "../context/PageContext"
 import { fetchStockDetails, fetchQuote } from "../api/stock-api"
 
 import { truncate } from '../helpers/helper-function'
+
 
 function Dashboard() {
 
@@ -26,6 +29,8 @@ function Dashboard() {
     const [stockDetails, setStockDetails] = useState({})
     const [quote, setQuote] = useState({}) 
     const [stockBought, setStockBought] = useState("")
+
+    const [cookies, setCookie, removeCookie] = useCookies(['simTradeServer']);
 
     useEffect(() => {
         const updateStockDetails = async () => {
@@ -59,7 +64,9 @@ function Dashboard() {
     }, [currentDate])
 
     return (
-        (page ?
+        <>
+    
+        {page === 1 ?
         <div className="">
             <div className={`h-screen grid grid-cols-1 md:grid-cols-2 xl: grid-cols-3 grid-rows-8 md: grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand
                 ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`}>
@@ -102,18 +109,27 @@ function Dashboard() {
                 </div>
                 <Portfolio />
             </div>
-        </div>
-        : 
-        <div className={`h-screen p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="trade">
-                <div className="w-full font-serif font-extrabold text-2xl">
-                    LeaderBoard
-                </div>
-                <div className="w-full">
-                    <Leaderboard />
-                </div>
-            </div>
-        )
+        </div> : <div></div>}
+        {page === 0 ? 
+            
+            <div className={`h-screen p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="">
+                    <div className="w-full font-serif font-extrabold text-2xl">
+                        LeaderBoard
+                    </div>
+                    <div className="w-full">
+                        <Leaderboard />
+                    </div>
+                </div> : <div></div>
+        }
 
+        {page === 2 ? 
+            <div className={`h-screen p-10 font-quicksand ${darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"}`} id="">
+                <div className="w-full">
+                    <Profile />
+                </div>
+            </div> : <div></div>
+        }
+    </>
   )
 }
 

@@ -9,10 +9,6 @@ function Portfolio() {
   const {darkMode} = useContext(ThemeContext)
   const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
   const { stockSymbol, setStockSymbol, currentPrice, setCurrentPrice, localCache, setLocalCache, globalCache, setGlobalCache } = useContext(StockContext); 
-  
-  useEffect(() => {
-    console.log(stockList) 
-  }, [stockList])
 
   return (
     // <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200" id="portfolio">
