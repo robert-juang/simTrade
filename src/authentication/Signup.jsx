@@ -1,7 +1,7 @@
 // Source: https://github.com/mui/material-ui/tree/v5.14.11/docs/data/material/getting-started/templates/sign-in
 
 import * as React from 'react';
-import {useContext} from 'react'; 
+import {useContext, useEffect} from 'react'; 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -76,6 +76,10 @@ export default function SignIn({values}) {
         setLoginPage(2)
     }
 
+    useEffect(() => {
+        setError("")
+    }, [])
+    
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
@@ -133,6 +137,7 @@ export default function SignIn({values}) {
                         >
                             Register
                         </Button>
+                        <span class="text-red-600 text-font-bold">{error}</span>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2" onClick={() => handleForgotPassword()}>

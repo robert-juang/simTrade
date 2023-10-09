@@ -5,6 +5,7 @@ import { StocksObject, SimulationObject } from '../logic/stock';
 import ThemeContext from '../context/ThemeContext'
 import SimulationContext from "../context/SimulationContext"
 import StockContext from '../context/StockContext';
+import AuthContext from '../context/AuthContext';
 
 import {addEntry} from "../api/database-api"
 
@@ -23,7 +24,8 @@ function Trade({ stockBought, setStockBought }) {
     const {stockSymbol} = useContext(StockContext)
     const { darkMode } = useContext(ThemeContext);
     const { portfolio, setPortfolio, startDate, setStartDate, currentDate, setCurrentDate, endDate, setEndDate, stockList, setStockList } = useContext(SimulationContext);
-
+    const { authenticated, setAuthenticated, username, setUsername, password, setPassword, email, setEmail, error, setError } = useContext(AuthContext) 
+    
 
     const handleStartDate = () => {
         setShowModal(false)
@@ -73,7 +75,7 @@ function Trade({ stockBought, setStockBought }) {
     }
 
     function saveSim(){
-        const USERID = makeid(64)
+        const USERID = username;
         const newObj = new SimulationObject(USERID, parseFloat(portfolio), stockList.getNumTrades(), portfolio - stockList.portfolio)
         addEntry(newObj)
     }

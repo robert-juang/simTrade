@@ -79,6 +79,10 @@ export default function Login({values}) {
         setLoginPage(2)
     }
 
+    useEffect(() => {
+        setError("") 
+    }, [])
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">

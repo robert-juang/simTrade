@@ -1,8 +1,8 @@
-const basePath = "http://localhost:8080";
+const basePath = "http://localhost:8080/api/simDB";
 
 //call the stock api from the backend 
 export const getEntries = async () => {
-    const response = await fetch(`${basePath}/simDB/simData`)
+    const response = await fetch(`${basePath}/simData`)
 
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
@@ -26,7 +26,7 @@ export const addEntry = async (Simulation) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "userID": Simulation._userID, "portfolioValue": Simulation._portfolioValue, "numberOfTrades": Simulation._numberOfTrades, "totalGain": Simulation._totalGain })
     }; 
-    const response = await fetch(`${basePath}/simDB/simData`, requestOptions)
+    const response = await fetch(`${basePath}/simData`, requestOptions)
 
     if (!response.ok){
         const message = `An error has occured: ${response.status}`;
