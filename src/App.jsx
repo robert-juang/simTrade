@@ -43,13 +43,6 @@ function App() {
   const [currentDate, setCurrentDate] = useState("2022-01-01"); 
   const [stockList, setStockList] = useState(new StocksObject(portfolio)); 
 
-  useEffect(() =>{
-    const decodedCookie = decodeURIComponent(document.cookie);
-    console.log(decodedCookie) 
-    // const a = isCookiePresent('simTradeServer');
-    // console.log(a) 
-  },[])
-
   return (
     <>
     <AuthContext.Provider value={{authenticated, setAuthenticated, username, setUsername, password, setPassword, email, setEmail, error, setError}}>

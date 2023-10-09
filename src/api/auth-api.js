@@ -1,4 +1,4 @@
-const basePath = "http://localhost:8080";
+const basePath = import.meta.env.VITE_API_AUTH_BASE_PATH
 
 //call the stock api from the backend 
 export const login = async (username, password) => {
@@ -9,7 +9,7 @@ export const login = async (username, password) => {
         body: JSON.stringify({username: username, password: password})
 
     };
-    const response = await fetch(`${basePath}/api/auth/signin`, requestOptions)
+    const response = await fetch(`${basePath}/signin`, requestOptions)
 
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
@@ -26,7 +26,7 @@ export const signup = async (email, username, password) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "username": username, "email": email, "password": password, "role": ["user"] })
     };
-    const response = await fetch(`${basePath}/api/auth/signup`, requestOptions)
+    const response = await fetch(`${basePath}/signup`, requestOptions)
     console.log(response) 
 
     if (!response.ok) {
@@ -47,7 +47,7 @@ export const logOut = async (username, password) =>{
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "username": username, "password": password})
     };
-    const response = await fetch(`${basePath}/api/auth/signout`, requestOptions)
+    const response = await fetch(`${basePath}/signout`, requestOptions)
 
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;

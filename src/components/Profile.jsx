@@ -5,7 +5,6 @@ import AuthContext from '../context/AuthContext';
 import * as auth from "../api/auth-api.js"
 
 function Profile() {
-  //Credit to: https://tailwindcomponents.com/component/profile-card-3
   const { authenticated, setAuthenticated, username, setUsername, password, setPassword, email, setEmail, error, setError } = useContext(AuthContext) 
 
   const handleLogout = async() => {
@@ -13,7 +12,7 @@ function Profile() {
     try {
       setError("")
       const result = await auth.logOut(username, password)
-      console.log(result) 
+      console.log(result)
       setAuthenticated(false)
     } catch (error) {
       setError(`Failed: ${error}`)

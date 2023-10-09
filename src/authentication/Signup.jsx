@@ -1,5 +1,3 @@
-// Source: https://github.com/mui/material-ui/tree/v5.14.11/docs/data/material/getting-started/templates/sign-in
-
 import * as React from 'react';
 import {useContext, useEffect} from 'react'; 
 import Avatar from '@mui/material/Avatar';

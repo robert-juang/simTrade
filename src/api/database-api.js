@@ -1,4 +1,4 @@
-const basePath = "http://localhost:8080/api/simDB";
+const basePath = import.meta.env.VITE_API_DB_BASE_PATH;
 
 //call the stock api from the backend 
 export const getEntries = async () => {
