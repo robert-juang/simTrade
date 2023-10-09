@@ -24,6 +24,7 @@ Leaderboard
 ### Technologies 
 
 * React
+* TailwindCSS
 * Axios/Fetch API
 * Spring Boot
 * JWT/Auth0
