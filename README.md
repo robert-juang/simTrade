@@ -4,7 +4,7 @@ Want to know what it feels like to trade stocks during the Gamestop Short Squeez
 
 The application is hosted on Vercel for the frontend and AWS for the backend. 
 
-The frontend can be viewed [here](https://google.com)
+The application can be viewed [here](https://google.com)
 
 SimTrade Login
 ![Alt text](/public/demo1.png)
