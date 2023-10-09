@@ -6,11 +6,11 @@ The application is hosted on Vercel for the frontend and AWS for the backend.
 
 The frontend can be viewed [here](https://google.com)
 
-![Alt text](/assets/demo1.png?raw=true "Search")
-![Alt text](/assets/demo2.png?raw=true "Body1")
-![Alt text](/assets/demo3.png?raw=true "Body3")
-![Alt text](/assets/demo4.png?raw=true "Body4")
-![Alt text](/assets/demo5.png?raw=true "Body5")
+![Alt text](/assets/demo1.png)
+![Alt text](/assets/demo2.png)
+![Alt text](/assets/demo3.png)
+![Alt text](/assets/demo4.png)
+![Alt text](/assets/demo5.png)
 
 ### Technologies 
 
