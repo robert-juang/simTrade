@@ -6,11 +6,20 @@ The application is hosted on Vercel for the frontend and AWS for the backend.
 
 The frontend can be viewed [here](https://google.com)
 
-![Alt text](/assets/demo1.png)
-![Alt text](/assets/demo2.png)
-![Alt text](/assets/demo3.png)
-![Alt text](/assets/demo4.png)
-![Alt text](/assets/demo5.png)
+SimTrade Login
+![Alt text](/public/demo1.png)
+
+Registering another user
+![Alt text](/public/demo2.png)
+
+Main Dashboard
+![Alt text](/public/demo3.png)
+
+Trading Menu
+![Alt text](/public/demo4.png)
+
+Leaderboard
+![Alt text](/public/demo5.png)
 
 ### Technologies 
 
