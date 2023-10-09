@@ -1,10 +1,10 @@
-# SimTrade
+# 📈SimTrade📈
 
 Want to know what it feels like to trade stocks during the Gamestop Short Squeeze of 2021? Well look no further! SimTrade is a full-stack application developed to provide the user with an interface to simulate a trading environment in the past. After registering, you'll be able to trade and save your progress. In addition, you have the option of sharing it on the global leaderboard if you want to impress your friends! 
 
 The application is hosted on Vercel for the frontend and AWS for the backend. 
 
-The frontend can be viewed [here](https://google.com)
+Click [here](https://google.com) to view the application
 
 SimTrade Login
 ![Alt text](/public/demo1.png)
@@ -24,10 +24,13 @@ Leaderboard
 ### Technologies 
 
 * React
+* TailwindCSS
+* Axios/Fetch API
 * Spring Boot
-* JWT
-* APIs (Weather, Air Quality, News, OpenAI)
-* ChartJS
+* JWT/Auth0
+* PostGreSQL 
+* Finnhub API
+* ChartJS / Recharts
 * Material UI
 * Vercel
 * AWS
@@ -42,22 +45,29 @@ Leaderboard
 
 ## Functionality 
 
-### OpenAI Forecast Summary 
+### Login/Authentication with JWT
 
-* Integrated OpenAI API to display a summary of the current city/state, the weather data collected from the API, and some activities that the user able to partake in.
-
-### Forecast Data 
-
-* Provides real-time weather data and air quality data based on the user's city and state input
-* Provides a 7 day weather forecast that includes the temperature and weather condition displayed by conditionally rendered weather icons
-* APIs used: OpenMeteo
+* Integrated Login and Authentication with JWT to handle login/logout/signup functionalities. 
 
 ### Stock Data + Trading
 
-* Display the stock data with an opbased on the user's city and state input.
+* Display the stock data, trade, and watch your holdings grow in value or depreciate into oblivion. You'll be able to control the timing of the trades so choose wisely!
 * APIs used: FinnHubAPI
+
+### Leaderboard
+* Stock leaderboard allows the user to share his/her progress with everyone! 
 
 ## Version History
 
 * 0.1
     * Initial Release
+
+## Credits 
+This project made use of the following tutorials: 
+
+https://www.youtube.com/watch?v=TDn8RhG20nA&list=PLJN4kg0Hkqi2fu6ifNAkw9TLwTOH-e0-K
+
+https://github.com/mui/material-ui/tree/v5.14.11/docs/data/material/getting-started/templates/sign-in
+
+https://tailwindcomponents.com/component/profile-card-3
+
