@@ -1,4 +1,4 @@
-# SimTrade
+# 📈SimTrade📈
 
 Want to know what it feels like to trade stocks during the Gamestop Short Squeeze of 2021? Well look no further! SimTrade is a full-stack application developed to provide the user with an interface to simulate a trading environment in the past. After registering, you'll be able to trade and save your progress. In addition, you have the option of sharing it on the global leaderboard if you want to impress your friends! 
 
