@@ -60,3 +60,13 @@ Leaderboard
 
 * 0.1
     * Initial Release
+
+## Credits 
+This project made use of the following tutorials: 
+
+https://www.youtube.com/watch?v=TDn8RhG20nA&list=PLJN4kg0Hkqi2fu6ifNAkw9TLwTOH-e0-K
+
+https://github.com/mui/material-ui/tree/v5.14.11/docs/data/material/getting-started/templates/sign-in
+
+https://tailwindcomponents.com/component/profile-card-3
+
