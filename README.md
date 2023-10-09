@@ -24,10 +24,12 @@ Leaderboard
 ### Technologies 
 
 * React
+* Axios/Fetch API
 * Spring Boot
-* JWT
-* APIs (Weather, Air Quality, News, OpenAI)
-* ChartJS
+* JWT/Auth0
+* PostGreSQL 
+* Finnhub API
+* ChartJS / Recharts
 * Material UI
 * Vercel
 * AWS
@@ -42,20 +44,17 @@ Leaderboard
 
 ## Functionality 
 
-### OpenAI Forecast Summary 
+### Login/Authentication with JWT
 
-* Integrated OpenAI API to display a summary of the current city/state, the weather data collected from the API, and some activities that the user able to partake in.
-
-### Forecast Data 
-
-* Provides real-time weather data and air quality data based on the user's city and state input
-* Provides a 7 day weather forecast that includes the temperature and weather condition displayed by conditionally rendered weather icons
-* APIs used: OpenMeteo
+* Integrated Login and Authentication with JWT to handle login/logout/signup functionalities. 
 
 ### Stock Data + Trading
 
-* Display the stock data with an opbased on the user's city and state input.
+* Display the stock data, trade, and watch your holdings grow in value or depreciate into oblivion. You'll be able to control the timing of the trades so choose wisely!
 * APIs used: FinnHubAPI
+
+### Leaderboard
+* Stock leaderboard allows the user to share his/her progress with everyone! 
 
 ## Version History
 
