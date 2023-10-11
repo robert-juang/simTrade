@@ -6,8 +6,8 @@ export const login = async (username, password) => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({username: username, password: password})
-
+        body: JSON.stringify({username: username, password: password}), 
+        referrerPolicy: "unsafe_url"
     };
     const response = await fetch(`${basePath}/signin`, requestOptions)
 
@@ -24,7 +24,8 @@ export const signup = async (email, username, password) => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "username": username, "email": email, "password": password, "role": ["user"] })
+        body: JSON.stringify({ "username": username, "email": email, "password": password, "role": ["user"] }),
+        referrerPolicy: "unsafe_url"
     };
     const response = await fetch(`${basePath}/signup`, requestOptions)
     console.log(response) 
@@ -45,7 +46,8 @@ export const logOut = async (username, password) =>{
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "username": username, "password": password})
+        body: JSON.stringify({ "username": username, "password": password}),
+        referrerPolicy: "unsafe_url"
     };
     const response = await fetch(`${basePath}/signout`, requestOptions)
 

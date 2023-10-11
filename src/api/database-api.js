@@ -2,7 +2,9 @@ const basePath = import.meta.env.VITE_API_DB_BASE_PATH;
 
 //call the stock api from the backend 
 export const getEntries = async () => {
-    const response = await fetch(`${basePath}/simData`)
+    const response = await fetch(`${basePath}/simData`, {
+        referrerPolicy: "unsafe_url"
+})
 
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
@@ -24,7 +26,8 @@ export const addEntry = async (Simulation) => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "userID": Simulation._userID, "portfolioValue": Simulation._portfolioValue, "numberOfTrades": Simulation._numberOfTrades, "totalGain": Simulation._totalGain })
+        body: JSON.stringify({ "userID": Simulation._userID, "portfolioValue": Simulation._portfolioValue, "numberOfTrades": Simulation._numberOfTrades, "totalGain": Simulation._totalGain }),
+        referrerPolicy: "unsafe_url"
     }; 
     const response = await fetch(`${basePath}/simData`, requestOptions)
 
