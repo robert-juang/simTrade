@@ -6,8 +6,7 @@ export const login = async (username, password) => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({username: username, password: password}),
-        referrerPolicy: "unsafe_url"
+        body: JSON.stringify({username: username, password: password})
     };
     const response = await fetch(`${basePath}/signin`, requestOptions)
 
